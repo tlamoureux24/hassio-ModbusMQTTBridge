@@ -1,0 +1,3 @@
+name: Modbus MQTT Bridge
+url: 'https://github.com/MerzSebastian/hassio-ModbusPowerMeter'
+maintainer: Sebastian Merz <awesome@example.com>

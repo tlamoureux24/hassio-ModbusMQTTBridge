@@ -1,0 +1,43 @@
+name: Modbus MQTT Bridge
+description: Modbus MQTT Bridge
+version: 1.0.0
+slug: modbus_mqtt_bridge
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+
+options:
+  publish_rate: 2
+  serial_port: /dev/ttyUSB0
+  serial_baudrate: 9600
+  serial_bytesize: 8
+  serial_parity: E
+  serial_stopbits: 1
+  serial_timeout: 0.6
+  serial_mode: rtu
+  serial_clear_buffers_before_each_transaction: false
+  serial_debug: false
+
+schema:
+  publish_rate: int
+  serial_port: str
+  serial_baudrate: int
+  serial_bytesize: int
+  serial_parity: str
+  serial_stopbits: int
+  serial_timeout: float
+  serial_mode: str
+  serial_clear_buffers_before_each_transaction: bool
+  serial_debug: bool
+  alternative_topics: str?
+
+# not sure how i can make this more dynamic, if someone has another id it will not work i guess
+devices: ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"]
+
+hassio_api: true
+services: 
+  - mqtt:need
