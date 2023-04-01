@@ -1,6 +1,6 @@
 name: Modbus MQTT Bridge
 description: Home Assistant Addon to bridge modbus devices to MQTT
-version: 1.0.0
+version: 1.0.1
 slug: modbus_mqtt_bridge
 init: false
 arch:
@@ -12,6 +12,7 @@ arch:
 
 options:
   publish_rate: 2
+  logging: false
   serial_port: /dev/ttyUSB0
   serial_baudrate: 9600
   serial_bytesize: 8
@@ -24,6 +25,7 @@ options:
 
 schema:
   publish_rate: int
+  logging: bool
   serial_port: str
   serial_baudrate: int
   serial_bytesize: int

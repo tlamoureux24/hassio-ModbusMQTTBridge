@@ -6,6 +6,9 @@ import paho.mqtt.client as mqtt
 import time
 import requests
 import os
+from datetime import datetime
+
+log = lambda value: os.system(f'echo \'{datetime.now().strftime("%m/%d/%Y, %H:%M:%S")} | {str(value)}\'') if hass_options["logging"] else lambda:None 
 
 mqtt_response = requests.get("http://supervisor/services/mqtt", headers={
     "Authorization": "Bearer " + os.environ.get('SUPERVISOR_TOKEN')
@@ -60,8 +63,15 @@ topic_address_map = [
 
 topic_address_map = json.loads(hass_options["alternative_topics"]) if "alternative_topics" in hass_options else topic_address_map
 
+def publish(client, topic, payload):
+    log(f'MQTT Publish => Topic: { topic }, Payload: { payload }')
+    client.publish(topic, payload)
+
 while True:
     for el in topic_address_map:
-        client.publish(el["topic"], read_address(el["address"], el["scale"] if "scale" in el else 1))
+        try:
+            publish(client, el["topic"], read_address(el["address"], el["scale"] if "scale" in el else 1))
+        except:
+            log("Seems like there went something wrong while reading from the serial adapter or publishing the data.")
     time.sleep(interval)
     
