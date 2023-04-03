@@ -36,10 +36,6 @@ modbus.mode = hass_options["serial_mode"]
 modbus.clear_buffers_before_each_transaction = hass_options["serial_clear_buffers_before_each_transaction"]
 modbus.debug = hass_options["serial_debug"]
 
-# def convert(value, scale = 1):
-#     result=str(hex(value)).replace('0x', '')
-#     return round(struct.unpack('>f', binascii.unhexlify('00000000' if result == '0' else result))[0] * scale, 2)
-    
 to_scaled_float=lambda v,scale=1:round(struct.unpack('>f',binascii.unhexlify(('00000000' if (r:=hex(v)[2:])=='0' else r.zfill(8))))[0]*scale,2)
 read_address=lambda address,scale=1:to_scaled_float(modbus.read_long(address), scale)
 
