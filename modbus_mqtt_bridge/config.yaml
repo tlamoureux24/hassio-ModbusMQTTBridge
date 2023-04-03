@@ -24,9 +24,9 @@ options:
   serial_debug: false
 
 schema:
+  serial_port: device(subsystem=tty)
   publish_rate: int
   logging: bool
-  serial_port: device(subsystem=tty)
   serial_baudrate: int
   serial_bytesize: int
   serial_parity: str
