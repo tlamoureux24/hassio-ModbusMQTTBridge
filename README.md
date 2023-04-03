@@ -29,6 +29,25 @@ Here's an overview of the available options:
 # Usage
 Once the add-on is installed and configured, it will automatically start publishing data to the specified MQTT topics at the configured interval. You can use the published data to create sensors and automations in Home Assistant.
 
+# Default topics value
+```json
+    { "topic": "power-meter/voltage/l1", "address": 14 },
+    { "topic": "power-meter/voltage/l2", "address": 16 },
+    { "topic": "power-meter/voltage/l3", "address": 18 },
+    { "topic": "power-meter/frequency", "address": 20 },
+    { "topic": "power-meter/current/l1", "address": 22 },
+    { "topic": "power-meter/current/l2", "address": 24 },
+    { "topic": "power-meter/current/l3", "address": 26 },
+    { "topic": "power-meter/wattage", "address": 28, "scale": 1000 },
+    { "topic": "power-meter/wattage/l1", "address": 30, "scale": 1000 },
+    { "topic": "power-meter/wattage/l2", "address": 32, "scale": 1000 },
+    { "topic": "power-meter/wattage/l3", "address": 34, "scale": 1000 },
+    { "topic": "power-meter/power-factor/l1", "address": 54 },
+    { "topic": "power-meter/power-factor/l2", "address": 56 },
+    { "topic": "power-meter/power-factor/l3", "address": 58 },
+    { "topic": "power-meter/consumption", "address": 256 }
+```
+
 # Credits
 This add-on was created by Sebastian Merz. It uses the following libraries:
 minimalmodbus
