@@ -1,6 +1,6 @@
 name: Modbus MQTT Bridge
 description: Home Assistant Addon to bridge modbus devices to MQTT
-version: 1.0.2
+version: 1.0.3
 slug: modbus_mqtt_bridge
 init: false
 arch:
@@ -26,7 +26,7 @@ options:
 schema:
   publish_rate: int
   logging: bool
-  serial_port: str
+  serial_port: device(subsystem=tty)
   serial_baudrate: int
   serial_bytesize: int
   serial_parity: str
@@ -38,7 +38,8 @@ schema:
   alternative_topics: str?
 
 # not sure how i can make this more dynamic, if someone has another id it will not work i guess
-devices: ["/dev/ttyUSB1:/dev/ttyUSB1:rwm"]
+# devices: ["/dev/ttyUSB1:/dev/ttyUSB1:rwm"]
+uart: true
 
 hassio_api: true
 services: 
