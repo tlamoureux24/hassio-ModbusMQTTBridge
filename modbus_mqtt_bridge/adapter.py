@@ -37,7 +37,7 @@ to_scaled_float = lambda v,scale=1:round(struct.unpack('>f',binascii.unhexlify((
 read_address = lambda address,scale=1:to_scaled_float(modbus.read_long(address), scale)
 
 topic_address_map = [
-    { "sensor": { "unique_id": "power-meter_voltage_l1", "name": "Power TEST meter - voltage - l1", "state_topic": "power-meter/voltage/l1", "unit_of_measurement": "V" }, "address": 14 },
+    { "sensor": { "unique_id": "power-meter_voltage_l1", "name": "Power meter - voltage - l1", "state_topic": "power-meter/voltage/l1", "unit_of_measurement": "V" }, "address": 14 },
     { "sensor": { "unique_id": "power-meter_voltage_l2", "name": "Power meter - voltage - l2", "state_topic": "power-meter/voltage/l2", "unit_of_measurement": "V" }, "address": 16 },
     { "sensor": { "unique_id": "power-meter_voltage_l3", "name": "Power meter - voltage - l3", "state_topic": "power-meter/voltage/l3", "unit_of_measurement": "V" }, "address": 18 },
     { "sensor": { "unique_id": "power-meter_frequency", "name": "Power meter - frequency", "state_topic": "power-meter/frequency", "unit_of_measurement": "Hz" }, "address": 20 },

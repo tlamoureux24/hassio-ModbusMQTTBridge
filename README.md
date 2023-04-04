@@ -42,7 +42,7 @@ Once the add-on is installed and configured, it will automatically create MQTT s
   {
     "sensor": {
       "unique_id": "power-meter_voltage_l1",
-      "name": "Power TEST meter - voltage - l1",
+      "name": "Power meter - voltage - l1",
       "state_topic": "power-meter/voltage/l1",
       "unit_of_measurement": "V"
     },
