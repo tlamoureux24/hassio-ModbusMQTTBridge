@@ -1,0 +1,86 @@
+name: Eastron Energy Meter
+unique_id: eastron_sdm230-modbus
+company_name: Eastron
+product_name: SDM230-Modbus
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: 'N'
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+  functioncode: 4
+sensors:
+  - address: 0
+    name: Line to neutral volts.
+    unit: Volts
+  - address: 6
+    name: Current.
+    unit: Amps
+  - address: 12
+    name: Active power.
+    unit: Watts
+  - address: 18
+    name: Apparent power
+    unit: VoltAmps
+  - address: 24
+    name: Reactive power
+    unit: VAr
+  - address: 30
+    name: Power factor
+  - address: 36
+    name: Phase angle.
+    unit: Degree
+  - address: 70
+    name: Frequency
+    unit: Hz
+  - address: 72
+    name: Import active energy
+    unit: kwh
+  - address: 74
+    name: Export active energy
+    unit: kwh
+  - address: 76
+    name: Import reactive energy
+    unit: kvarh
+  - address: 78
+    name: Export reactive energy
+    unit: kvarh
+  - address: 84
+    name: Total system power demand
+    unit: W
+  - address: 86
+    name: Maximum total system power demand
+    unit: W
+  - address: 88
+    name: Current system positive power demand
+    unit: W
+  - address: 90
+    name: Maximum system positive power demand
+    unit: W
+  - address: 92
+    name: Current system reverse power demand
+    unit: W
+  - address: 94
+    name: Maximum system reverse power demand
+    unit: W
+  - address: 258
+    name: Current demand.
+    unit: Amps
+  - address: 264
+    name: Maximum current demand.
+    unit: Amps
+  - address: 342
+    name: Total active energy
+    unit: kwh
+  - address: 344
+    name: Total reactive energy
+    unit: kvarh
+  - address: 384
+    name: Current resettable total active energy
+    unit: kwh
+  - address: 386
+    name: Current resettable total reactive energy
+    unit: kvarh

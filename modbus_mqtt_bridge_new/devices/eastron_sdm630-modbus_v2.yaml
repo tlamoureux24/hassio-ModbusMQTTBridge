@@ -60,13 +60,10 @@ sensors:
     unit: VAr
   - address: 30
     name: Phase 1 power factor (1).
-    unit: None
   - address: 32
     name: Phase 2 power factor (1).
-    unit: None
   - address: 34
     name: Phase 3 power factor (1).
-    unit: None
   - address: 36
     name: Phase 1 phase angle.
     unit: Degrees
@@ -96,7 +93,6 @@ sensors:
     unit: VAr
   - address: 62
     name: Total system power factor (1).
-    unit: None
   - address: 66
     name: Total system phase angle.
     unit: Degrees
