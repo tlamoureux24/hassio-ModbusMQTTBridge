@@ -5,7 +5,7 @@ product_name: SDM630-Modbus V2
 serial:
   baudrate: 9600
   bytesize: 8
-  parity: N
+  parity: "N"
   stopbits: 1
   timeout: 0.6
   mode: rtu
@@ -201,16 +201,16 @@ sensors:
     unit: Amps
   - address: 334
     name: Line 1 to line 2 volts THD.
-    unit: ％
+    unit: "％"
   - address: 336
     name: Line 2 to line 3 volts THD.
-    unit: ％
+    unit: "％"
   - address: 338
     name: Line 3 to line 1 volts THD.
-    unit: ％
+    unit: "％"
   - address: 340
     name: Average line to line volts THD.
-    unit: ％
+    unit: "％"
   - address: 342
     name: Total kwh (Import+Export)
     unit: kwh
