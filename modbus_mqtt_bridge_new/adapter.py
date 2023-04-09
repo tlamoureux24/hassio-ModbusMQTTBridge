@@ -67,7 +67,7 @@ thread_reg = []
 def stop_thread_by_unique_id(unique_id):
     item = [x for x in thread_reg if x["unique_id"] == unique_id][0]
     item["terminate"]()
-    thread_reg = [x for x in thread_reg if x["unique_id"] != unique_id]
+    # thread_reg = [x for x in thread_reg if x["unique_id"] != unique_id] # temporary deactivated. shouldn't be a problem. 
 
 # Start threads of already registered devices
 if os.path.exists("/data/devices.yaml"):
