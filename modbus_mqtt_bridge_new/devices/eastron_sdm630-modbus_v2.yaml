@@ -1,0 +1,279 @@
+name: Eastron Energy Meter
+unique_id: eastron_sdm630-modbus_v2
+company_name: Eastron
+product_name: SDM630-Modbus V2
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: N
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+  functioncode: 4
+sensors:
+  - address: 0
+    name: Phase 1 line to neutral volts.
+    unit: Volts
+  - address: 2
+    name: Phase 2 line to neutral volts.
+    unit: Volts
+  - address: 4
+    name: Phase 3 line to neutral volts.
+    unit: Volts
+  - address: 6
+    name: Phase 1 current.
+    unit: Amps
+  - address: 8
+    name: Phase 2 current.
+    unit: Amps
+  - address: 10
+    name: Phase 3 current.
+    unit: Amps
+  - address: 12
+    name: Phase 1 power.
+    unit: Watts
+  - address: 14
+    name: Phase 2 power.
+    unit: Watts
+  - address: 16
+    name: Phase 3 power.
+    unit: Watts
+  - address: 18
+    name: Phase 1 volt amps.
+    unit: VA
+  - address: 20
+    name: Phase 2 volt amps.
+    unit: VA
+  - address: 22
+    name: Phase 3 volt amps.
+    unit: VA
+  - address: 24
+    name: Phase 1 volt amps reactive.
+    unit: VAr
+  - address: 26
+    name: Phase 2 volt amps reactive.
+    unit: VAr
+  - address: 28
+    name: Phase 3 volt amps reactive.
+    unit: VAr
+  - address: 30
+    name: Phase 1 power factor (1).
+    unit: None
+  - address: 32
+    name: Phase 2 power factor (1).
+    unit: None
+  - address: 34
+    name: Phase 3 power factor (1).
+    unit: None
+  - address: 36
+    name: Phase 1 phase angle.
+    unit: Degrees
+  - address: 38
+    name: Phase 2 phase angle.
+    unit: Degrees
+  - address: 40
+    name: Phase 3 phase angle.
+    unit: Degrees
+  - address: 42
+    name: Average line to neutral volts.
+    unit: Volts
+  - address: 46
+    name: Average line current.
+    unit: Amps
+  - address: 48
+    name: Sum of line currents.
+    unit: Amps
+  - address: 52
+    name: Total system power.
+    unit: Watts
+  - address: 56
+    name: Total system volt amps.
+    unit: VA
+  - address: 60
+    name: Total system VAr.
+    unit: VAr
+  - address: 62
+    name: Total system power factor (1).
+    unit: None
+  - address: 66
+    name: Total system phase angle.
+    unit: Degrees
+  - address: 70
+    name: Frequency of supply voltages.
+    unit: Hz
+  - address: 72
+    name: Import Wh since last reset (2).
+    unit: kWh/MWh
+  - address: 74
+    name: Export Wh since last reset (2).
+    unit: kWh/MWh
+  - address: 76
+    name: Import VArh since last reset (2).
+    unit: kVArh/MVArh
+  - address: 78
+    name: Export VArh since last reset (2).
+    unit: kVArh/MVArh
+  - address: 80
+    name: VAh since last reset (2).
+    unit: kVAh/MVAh
+  - address: 82
+    name: Ah since last reset(3).
+    unit: Ah/kAh
+  - address: 84
+    name: Total system power demand (4).
+    unit: W
+  - address: 86
+    name: Maximum total system power demand (4).
+    unit: VA
+  - address: 100
+    name: Total system VA demand.
+    unit: VA
+  - address: 102
+    name: Maximum total system VA demand.
+    unit: VA
+  - address: 104
+    name: Neutral current demand.
+    unit: Amps
+  - address: 106
+    name: Maximum neutral current demand.
+    unit: Amps
+  - address: 200
+    name: Line 1 to Line 2 volts.
+    unit: Volts
+  - address: 202
+    name: Line 2 to Line 3 volts.
+    unit: Volts
+  - address: 204
+    name: Line 3 to Line 1 volts.
+    unit: Volts
+  - address: 206
+    name: Average line to line volts.
+    unit: Volts
+  - address: 224
+    name: Neutral current.
+    unit: Amps
+  - address: 234
+    name: Phase 1 L/N volts THD
+    unit: '%'
+  - address: 236
+    name: Phase 2 L/N volts THD
+    unit: '%'
+  - address: 238
+    name: Phase 3 L/N volts THD
+    unit: '%'
+  - address: 240
+    name: Phase 1 Current THD
+    unit: '%'
+  - address: 242
+    name: Phase 2 Current THD
+    unit: '%'
+  - address: 244
+    name: Phase 3 Current THD
+    unit: '%'
+  - address: 248
+    name: Average line to neutral volts THD.
+    unit: '%'
+  - address: 250
+    name: Average line current THD.
+    unit: '%'
+  - address: 254
+    name: Total system power factor (5).
+    unit: Degree
+  - address: 258
+    name: Phase 1 current demand.
+    unit: Amps
+  - address: 260
+    name: Phase 2 current demand.
+    unit: Amps
+  - address: 262
+    name: Phase 3 current demand.
+    unit: Amps
+  - address: 264
+    name: Maximum phase 1 current demand.
+    unit: Amps
+  - address: 266
+    name: Maximum phase 2 current demand.
+    unit: Amps
+  - address: 268
+    name: Maximum phase 3 current demand.
+    unit: Amps
+  - address: 334
+    name: Line 1 to line 2 volts THD.
+    unit: ％
+  - address: 336
+    name: Line 2 to line 3 volts THD.
+    unit: ％
+  - address: 338
+    name: Line 3 to line 1 volts THD.
+    unit: ％
+  - address: 340
+    name: Average line to line volts THD.
+    unit: ％
+  - address: 342
+    name: Total kwh (Import+Export)
+    unit: kwh
+  - address: 344
+    name: Total kvarh (Import+Export)
+    unit: kvarh
+  - address: 346
+    name: L1 import kwh
+    unit: kwh
+  - address: 348
+    name: L2 import kwh
+    unit: kwh
+  - address: 350
+    name: L3 import kWh
+    unit: kwh
+  - address: 352
+    name: L1 export kWh
+    unit: kwh
+  - address: 354
+    name: L2 export kwh
+    unit: kwh
+  - address: 356
+    name: L3 export kWh
+    unit: kwh
+  - address: 358
+    name: L1 total kwh
+    unit: kwh
+  - address: 360
+    name: L2 total kWh
+    unit: kwh
+  - address: 362
+    name: L3 total kwh
+    unit: kwh
+  - address: 364
+    name: L1 import kvarh
+    unit: kvarh
+  - address: 366
+    name: L2 import kvarh
+    unit: kvarh
+  - address: 368
+    name: L3 import kvarh
+    unit: kvarh
+  - address: 370
+    name: L1 export kvarh
+    unit: kvarh
+  - address: 372
+    name: L2 export kvarh
+    unit: kvarh
+  - address: 374
+    name: L3 export kvarh
+    unit: kvarh
+  - address: 376
+    name: L1 total kvarh
+    unit: kvarh
+  - address: 378
+    name: L2 total kvarh
+    unit: kvarh
+  - address: 380
+    name: L3 total kvarh
+    unit: kvarh
+  - address: 396
+    name: Net kWh (Import-Export)
+    unit: kWh
+  - address: 398
+    name: Net kVArh (Import-Export)
+    unit: kvarh

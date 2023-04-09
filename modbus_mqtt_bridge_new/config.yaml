@@ -1,6 +1,6 @@
 name: Modbus MQTT Bridge NEW
 description: Home Assistant Addon to bridge modbus devices to MQTT
-version: 1.0.3
+version: 1.0.4
 slug: modbus_mqtt_bridge_new
 init: false
 ingress: true

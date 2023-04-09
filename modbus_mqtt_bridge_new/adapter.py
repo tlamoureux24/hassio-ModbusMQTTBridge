@@ -54,7 +54,7 @@ class ModbusTask:
         modbus.debug = device_info["serial"]["debug"]
         to_scaled_float = lambda v,scale=1:round(struct.unpack('>f',binascii.unhexlify(('00000000' if (r:=hex(v)[2:])=='0' else r.zfill(8))))[0]*scale,2)
         # read_address = lambda address,scale=1:to_scaled_float(modbus.read_long(address), scale)
-        read_address = lambda address,scale=1:round(modbus.read_float(address, functioncode=3, number_of_registers=2) * scale, 2)
+        read_address = lambda address,scale=1:round(modbus.read_float(address, functioncode=device_info["serial"]["functioncode"], number_of_registers=2) * scale, 2)
         # def read_address(addr, scale):
         #     return 2 * scale
         while self._running:

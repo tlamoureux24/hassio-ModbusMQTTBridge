@@ -11,6 +11,7 @@ serial:
   mode: rtu
   debug: False
   clear_buffers_before_each_transaction: True
+  functioncode: 3
 sensors:
   - name: voltage l1
     icon: mdi:lightning-bolt
