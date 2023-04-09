@@ -10,6 +10,7 @@ import minimalmodbus
 import time
 import struct
 import binascii
+import uuid
 
 # MQTT Setup
 mqtt_response = requests.get("http://supervisor/services/mqtt", headers={ "Authorization": "Bearer " + os.environ.get('SUPERVISOR_TOKEN') }).json()
@@ -110,6 +111,7 @@ def api_monitored_devices_get():
 @app.route('/api/monitor/devices', methods = ['POST'])
 def api_monitored_devices_post():
     data = request.get_json()
+    data["unique_id"] = str(uuid.uuid4())
     device_info = get_device_by_device_id(data["device_id"])
     device_data = {
         "identifiers": [data["unique_id"]],

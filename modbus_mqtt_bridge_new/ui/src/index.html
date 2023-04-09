@@ -247,7 +247,6 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "unique_id": crypto.randomUUID(),
                         "device_id": document.getElementById('devices-list').value,
                         "poll_rate": Number(document.getElementById('usb-poll-rate-input').value),
                         "serial_port": document.getElementById('usb-selector-list').value,
