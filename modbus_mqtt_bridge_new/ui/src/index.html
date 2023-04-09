@@ -1,0 +1,308 @@
+<link rel="stylesheet" href="styles.css">
+<html class="dark">
+<body class="bg-white dark:bg-gray-900 antialiased">
+    <header>
+        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                <div class="flex items-center">
+                    <img src="assets/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">ModbusToMQTT</span>
+                </div>
+                <!-- <div class="flex items-center lg:order-2">
+                    <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Get started</a>
+                    <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="#" id="devices-tab" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Devices</a>
+                        </li>
+                        <li>
+                            <a href="#" id="register-tab" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Register</a>
+                        </li>
+                        <li>
+                            <a href="#" id="testing" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Toggle Darkmode</a>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Devices Tab -->
+    <div id="devices-tab-content">
+        <!-- Add Device -->
+        <div class="flex gap-4 p-5">
+            <!-- SELECT -->
+            <select id="devices-list" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Choose a device</option>
+            </select>
+
+            <!-- IP -->
+            <input id="ip-input-field" type="email" aria-describedby="helper-text-explanation" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="192.168.178.100">
+            <!-- USB -->
+            <select id="usb-selector-list" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Choose a usb device</option>
+            </select>
+            <!-- <input id="usb-slave-address-input" class="w-28 hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="slave address: 1 (example)">
+            <input id="usb-poll-rate-input" class="w-28 hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="poll rate: 2 (example, every n seconds)"> -->
+            <div id="usb-slave-address-input-hide" class="hidden relative z-0 w-full group">
+                <input id="usb-slave-address-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Slave address</label>
+            </div>
+            <div id="usb-poll-rate-input-hide" class="hidden relative z-0 w-full group">
+                <input id="usb-poll-rate-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Poll rate</label>
+            </div>
+
+
+            <button id="add-devices-btn" type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+        </div>
+
+        <!-- Devices Table -->
+        <div id="devices-table" class="relative overflow-x-auto px-5">
+            <table class="rounded-lg overflow-hidden w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Company name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Product name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Connection type
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Port / IP
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Slave address
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Poll rate
+                        </th>
+                        <th scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This is a hidden entry so that tailwind styles getting compiled correctly -->
+                    <tr class="hidden bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            PLACEHOLDER
+                        </th>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            PLACEHOLDER
+                        </td>
+                        <td class="px-6 py-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Register -->
+    <div id="test-input" class="hidden p-5">
+        <form>
+            <div class="grid md:grid-cols-4 md:gap-6">
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Serial port</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Baudrate</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                  <input type="text" name="floating_company" id="floating_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label for="floating_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Bytesize</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Parity</label>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-4 md:gap-6">
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Stopbits</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                  <input type="text" name="floating_company" id="floating_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label for="floating_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Timeout</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mode</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                  <input type="text" name="floating_company" id="floating_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label for="floating_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Slave address</label>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-4 md:gap-6">
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
+                </div>
+            </div>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Send</button>
+        </form>
+        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white px-5">Output</label>
+        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled></textarea>
+    </div>
+
+    <script>
+        function registeredDeviceSelected(event, devices) {
+            let serialIds = ['usb-selector-list', 'usb-slave-address-input-hide', 'usb-poll-rate-input-hide'];
+            let defaultIds = serialIds;
+            if (Object.keys(devices.find(e => e.unique_id === event.target.value) ?? {}).includes("serial")) {
+                serialIds.forEach(id => document.getElementById(id).style.display = 'block');
+            }
+            else {
+                defaultIds.forEach(id => document.getElementById(id).style.display = 'none');
+            }
+        }
+
+        async function loadRegisteredDevices(devicesInfo) {
+            document.getElementById('devices-table').getElementsByTagName('tbody')[0].innerHTML = "";
+            const devices = await (await fetch(document.location.pathname + "/api/monitor/devices")).json();
+            for (let i = 0; i < devices.length; i++) {
+                const device = devices[i];
+                const lastItem = devices.length === i + 1;
+                let deviceInfo = devicesInfo.find(e => e.unique_id === device.device_id);
+                var template = document.createElement('template');
+                template.innerHTML = `<tr class="bg-white ${lastItem ? "" : "border-b "}dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        ${deviceInfo.name}
+                    </th>
+                    <td class="px-6 py-4">
+                        ${deviceInfo.company_name}
+                    </td>
+                    <td class="px-6 py-4">
+                        ${deviceInfo.product_name}
+                    </td>
+                    <td class="px-6 py-4">
+                        ${device?.serial_port ? 'usb' : 'ip'}
+                    </td>
+                    <td class="px-6 py-4">
+                        ${device.serial_port}
+                    </td>
+                    <td class="px-6 py-4">
+                        ${device.slave_address}
+                    </td>
+                    <td class="px-6 py-4">
+                        ${device.poll_rate}
+                    </td>
+                    <td class="px-6 py-4">
+                        <svg id="${device.unique_id}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer">
+                            <path id="${device.unique_id}" stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </td>
+                </tr>`.trim();
+                template.content.firstChild.getElementsByTagName('svg')[0].addEventListener('click', async (event) => {
+                    await fetch(document.location.pathname + "/api/monitor/devices/" + event.target.id, {
+                        method: 'DELETE'
+                    });
+                    loadRegisteredDevices(devicesInfo);
+                });
+                document.getElementById('devices-table').getElementsByTagName('tbody')[0].appendChild(template.content.firstChild);
+            }
+
+        }
+
+
+        async function addDeviceToRegistery(devices) {
+            if (true) { // CHECK HERE IF IT IS USB DEVICE (tbd only usb supported for now)
+                await fetch(document.location.pathname + "/api/monitor/devices", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "unique_id": crypto.randomUUID(),
+                        "device_id": document.getElementById('devices-list').value,
+                        "poll_rate": Number(document.getElementById('usb-poll-rate-input').value),
+                        "serial_port": document.getElementById('usb-selector-list').value,
+                        "slave_address": Number(document.getElementById('usb-slave-address-input').value)
+                    })
+                });
+            }
+            loadRegisteredDevices(devices);
+        }
+
+
+        async function loadSerialPorts() {
+            const serialPorts = await (await fetch(document.location.pathname + "/api/serial")).json();
+            serialPorts.forEach((device) => {
+                const option = document.createElement("option");
+                option.innerText = device;
+                option.value = device;
+                document.getElementById('usb-selector-list').appendChild(option);
+            });
+        }
+
+        // Load available devices
+        (async() => {
+            const devices = await (await fetch(document.location.pathname + "/api/devices")).json();
+            devices.forEach((device) => {
+                const option = document.createElement("option");
+                const name = device.name + " - " + device.company_name + " " + device.product_name;
+                option.innerText = name;
+                option.value = device.unique_id;
+                document.getElementById('devices-list').appendChild(option);
+            });
+            await loadRegisteredDevices(devices);
+            document.getElementById('add-devices-btn').addEventListener('click', () => addDeviceToRegistery(devices));
+            document.getElementById('devices-list').addEventListener("change", (event) => registeredDeviceSelected(event, devices));
+        })();
+
+        loadSerialPorts();
+
+        // tbd: implement testing/add-new-device tab
+        // document.getElementById('devices-tab').addEventListener('click', () => {
+        //     document.getElementById('test-input').style.display = 'none';
+        //     document.getElementById('devices-tab-content').style.display = 'block';
+        // });
+        // document.getElementById('register-tab').addEventListener('click', () => {
+        //     document.getElementById('test-input').style.display = 'block';
+        //     document.getElementById('devices-tab-content').style.display = 'none';
+        // });
+        // document.getElementById('testing').addEventListener('click', () => {
+        //     if (document.documentElement.classList.length == 1) {
+        //         document.documentElement.classList = [];
+        //         return;
+        //     }
+        //     document.documentElement.classList.add('dark');
+        // });
+
+    </script>
+</body>
+</html>

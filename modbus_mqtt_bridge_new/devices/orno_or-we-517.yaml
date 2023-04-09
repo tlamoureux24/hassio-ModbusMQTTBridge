@@ -1,0 +1,80 @@
+name: Orno Energy Meter
+unique_id: orno_or-we-517
+company_name: ORNO
+product_name: OR-WE-517
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: E
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+sensors:
+  - name: voltage l1
+    icon: mdi:lightning-bolt
+    address: 14
+    unit: V
+  - name: voltage l2
+    icon: mdi:lightning-bolt
+    address: 16
+    unit: V
+  - name: voltage l3
+    icon: mdi:lightning-bolt
+    address: 18
+    unit: V
+
+  - name: frequency
+    icon: mdi:sine-wave
+    address: 20
+    unit: Hz
+
+  - name: current l1
+    icon: mdi:lightning-bolt
+    address: 22
+    unit: A
+  - name: current l2
+    icon: mdi:lightning-bolt
+    address: 24
+    unit: A
+  - name: current l3
+    icon: mdi:lightning-bolt
+    address: 26
+    unit: A
+
+  - name: wattage
+    icon: mdi:lightning-bolt
+    address: 28
+    unit: W
+    scale: 1000
+  - name: wattage l1
+    icon: mdi:lightning-bolt
+    address: 30
+    unit: W
+    scale: 1000
+  - name: wattage l2
+    icon: mdi:lightning-bolt
+    address: 32
+    unit: W
+    scale: 1000
+  - name: wattage l3
+    icon: mdi:lightning-bolt
+    address: 34
+    unit: W
+    scale: 1000
+
+  - name: power factor l1
+    icon: mdi:lightning-bolt
+    address: 54
+  - name: power factor l2
+    icon: mdi:lightning-bolt
+    address: 56
+  - name: power factor l3
+    icon: mdi:lightning-bolt
+    address: 58
+
+  - name: consumption
+    icon: mdi:transmission-tower-export
+    address: 256
+    unit: kWh
