@@ -208,10 +208,10 @@ sensors:
     name: Average line to line volts THD.
     unit: '%'
   - address: 342
-    name: Total kwh (Import+Export)
+    name: Total kwh (Import and Export)
     unit: kwh
   - address: 344
-    name: Total kvarh (Import+Export)
+    name: Total kvarh (Import and Export)
     unit: kvarh
   - address: 346
     name: L1 import kwh
