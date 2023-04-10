@@ -605,6 +605,10 @@ video {
   height: 1.5rem;
 }
 
+.h-9 {
+  height: 2.25rem;
+}
+
 .w-28 {
   width: 7rem;
 }
@@ -1084,10 +1088,6 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:h-9 {
-    height: 2.25rem;
-  }
-
   .sm\:w-auto {
     width: auto;
   }
