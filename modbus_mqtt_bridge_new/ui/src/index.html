@@ -36,31 +36,37 @@
     <!-- Devices Tab -->
     <div id="devices-tab-content">
         <!-- Add Device -->
-        <div class="flex gap-4 p-5">
+        <div>
             <!-- SELECT -->
-            <select id="devices-list" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <!-- <select id="devices-list" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Choose a device</option>
-            </select>
+            </select> -->
 
             <!-- IP -->
             <input id="ip-input-field" type="email" aria-describedby="helper-text-explanation" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="192.168.178.100">
             <!-- USB -->
-            <select id="usb-selector-list" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Choose a usb device</option>
-            </select>
-            <!-- <input id="usb-slave-address-input" class="w-28 hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="slave address: 1 (example)">
-            <input id="usb-poll-rate-input" class="w-28 hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="poll rate: 2 (example, every n seconds)"> -->
-            <div id="usb-slave-address-input-hide" class="hidden relative z-0 w-full group">
-                <input id="usb-slave-address-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Slave address</label>
-            </div>
-            <div id="usb-poll-rate-input-hide" class="hidden relative z-0 w-full group">
-                <input id="usb-poll-rate-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Poll rate (in seconds)</label>
-            </div>
+            <form class="w-full" id="add-device-form">
+                <div class="flex gap-4 p-5">
+                    <select id="devices-list" class="flex-1 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" disabled selected hidden>Choose a device</option>
+                    </select>
+
+                    <select id="usb-selector-list" class="hidden group flex-none w-44 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required >
+                        <option value="" disabled selected hidden>Choose a usb device</option>
+                    </select>
+                    <div id="usb-slave-address-input-hide" class="hidden flex-none relative z-0 w-24 group">
+                        <input id="usb-slave-address-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Slave address</label>
+                    </div>
+                    <div id="usb-poll-rate-input-hide" class="hidden flex-none relative z-0 w-36 group">
+                        <input id="usb-poll-rate-input" type="text" name="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Poll rate (in seconds)</label>
+                    </div>
 
 
-            <button id="add-devices-btn" type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                    <button id="add-devices-btn" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                </div>
+            </form>
         </div>
 
         <!-- Devices Table -->
@@ -239,22 +245,24 @@
 
 
         async function addDeviceToRegistery(devices) {
-            if (true) { // CHECK HERE IF IT IS USB DEVICE (tbd only usb supported for now)
-                await fetch(document.location.pathname + "/api/monitor/devices", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "device_id": document.getElementById('devices-list').value,
-                        "poll_rate": Number(document.getElementById('usb-poll-rate-input').value),
-                        "serial_port": document.getElementById('usb-selector-list').value,
-                        "slave_address": Number(document.getElementById('usb-slave-address-input').value)
-                    })
-                });
+            if (document.getElementById('add-device-form').checkValidity()) {
+                if (true) { // CHECK HERE IF IT IS USB DEVICE (tbd only usb supported for now)
+                    await fetch(document.location.pathname + "/api/monitor/devices", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            "device_id": document.getElementById('devices-list').value,
+                            "poll_rate": Number(document.getElementById('usb-poll-rate-input').value),
+                            "serial_port": document.getElementById('usb-selector-list').value,
+                            "slave_address": Number(document.getElementById('usb-slave-address-input').value)
+                        })
+                    });
+                }
+                loadRegisteredDevices(devices);
             }
-            loadRegisteredDevices(devices);
         }
 
 

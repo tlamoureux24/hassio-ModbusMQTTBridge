@@ -609,8 +609,16 @@ video {
   height: 2.25rem;
 }
 
-.w-28 {
-  width: 7rem;
+.w-24 {
+  width: 6rem;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .w-6 {
@@ -623,6 +631,14 @@ video {
 
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-none {
+  flex: none;
 }
 
 .origin-\[0\] {
