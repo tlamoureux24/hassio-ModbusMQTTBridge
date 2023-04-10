@@ -1,69 +1,173 @@
 import json
-import minimalmodbus
-import struct
-import binascii
+from flask import Flask, send_from_directory, request
+import os, sys
+import yaml
+import glob
 import paho.mqtt.client as mqtt
-import time
 import requests
-import os
+import threading
+import minimalmodbus
+import time
+import uuid
 import subprocess
 from datetime import datetime
 
-log = lambda value: subprocess.run(f'echo "{datetime.now().strftime("%m/%d/%Y, %H:%M:%S")} | {str(value)}"', shell=True) if hass_options['logging'] else lambda: None
-hass_options = json.load(open('/data/options.json'))
-mqtt_response = requests.get("http://supervisor/services/mqtt", headers={ "Authorization": "Bearer " + os.environ.get('SUPERVISOR_TOKEN') }).json()["data"]
-
 # MQTT Setup
+mqtt_response = requests.get("http://supervisor/services/mqtt", headers={ "Authorization": "Bearer " + os.environ.get('SUPERVISOR_TOKEN') }).json()
+if "data" not in mqtt_response.keys():
+    sys.exit('FATAL ERROR | Seems like no mqtt service could be found. Are you sure you installed Mosquitto?')
+else:
+    mqtt_response = mqtt_response["data"]
 client = mqtt.Client()
-client.username_pw_set(username=mqtt_response["username"],password=mqtt_response["password"])
+client.username_pw_set(username=mqtt_response["username"], password=mqtt_response["password"])
 client.connect(mqtt_response["host"], mqtt_response["port"], 60)
 
-# Modbus setup
-modbus = minimalmodbus.Instrument(hass_options["serial_port"], 1)
-modbus.serial.baudrate = hass_options["serial_baudrate"]
-modbus.serial.bytesize = hass_options["serial_bytesize"]
-modbus.serial.parity = hass_options["serial_parity"]
-modbus.serial.stopbits = hass_options["serial_stopbits"]
-modbus.serial.timeout = hass_options["serial_timeout"]
-modbus.mode = hass_options["serial_mode"]
-modbus.clear_buffers_before_each_transaction = hass_options["serial_clear_buffers_before_each_transaction"]
-modbus.debug = hass_options["serial_debug"]
+def get_all_devices():
+    devices = []
+    folders = ["devices", "config/custom-modbus-devices"]
+    return [yaml.safe_load(open(file, "r")) for folder in folders for file in glob.glob(folder + "/*.yaml")]
 
-def publish(client, topic, payload):
-    log(f'MQTT Publish => Topic: { topic }, Payload: { payload }')
-    client.publish(topic, payload)
+devices_from_folder = get_all_devices()
+def get_device_by_device_id(device_id):
+    return [x for x in devices_from_folder if x["unique_id"] == device_id][0]
 
-to_scaled_float = lambda v,scale=1:round(struct.unpack('>f',binascii.unhexlify(('00000000' if (r:=hex(v)[2:])=='0' else r.zfill(8))))[0]*scale,2)
-read_address = lambda address,scale=1:to_scaled_float(modbus.read_long(address), scale)
-
-topic_address_map = [
-    { "sensor": { "unique_id": "power-meter_voltage_l1", "name": "Power meter - voltage - l1", "state_topic": "power-meter/voltage/l1", "unit_of_measurement": "V" }, "address": 14 },
-    { "sensor": { "unique_id": "power-meter_voltage_l2", "name": "Power meter - voltage - l2", "state_topic": "power-meter/voltage/l2", "unit_of_measurement": "V" }, "address": 16 },
-    { "sensor": { "unique_id": "power-meter_voltage_l3", "name": "Power meter - voltage - l3", "state_topic": "power-meter/voltage/l3", "unit_of_measurement": "V" }, "address": 18 },
-    { "sensor": { "unique_id": "power-meter_frequency", "name": "Power meter - frequency", "state_topic": "power-meter/frequency", "unit_of_measurement": "Hz" }, "address": 20 },
-    { "sensor": { "unique_id": "power-meter_current_l1", "name": "Power meter - current - l1", "state_topic": "power-meter/current/l1", "unit_of_measurement": "A" }, "address": 22 },
-    { "sensor": { "unique_id": "power-meter_current_l2", "name": "Power meter - current - l2", "state_topic": "power-meter/current/l2", "unit_of_measurement": "A" }, "address": 24 },
-    { "sensor": { "unique_id": "power-meter_current_l3", "name": "Power meter - current - l3", "state_topic": "power-meter/current/l3", "unit_of_measurement": "A" }, "address": 26 },
-    { "sensor": { "unique_id": "power-meter_wattage", "name": "Power meter - wattage", "state_topic": "power-meter/wattage", "unit_of_measurement": "W" }, "address": 28, "scale": 1000 },
-    { "sensor": { "unique_id": "power-meter_wattage_l1", "name": "Power meter - wattage - l1", "state_topic": "power-meter/wattage/l1", "unit_of_measurement": "W" }, "address": 30, "scale": 1000 },
-    { "sensor": { "unique_id": "power-meter_wattage_l2", "name": "Power meter - wattage - l2", "state_topic": "power-meter/wattage/l2", "unit_of_measurement": "W" }, "address": 32, "scale": 1000 },
-    { "sensor": { "unique_id": "power-meter_wattage_l3", "name": "Power meter - wattage - l3", "state_topic": "power-meter/wattage/l3", "unit_of_measurement": "W" }, "address": 34, "scale": 1000 },
-    { "sensor": { "unique_id": "power-meter_power-factor_l1", "name": "Power meter - power factor - l1", "state_topic": "power-meter/power-factor/l1" }, "address": 54 },
-    { "sensor": { "unique_id": "power-meter_power-factor_l2", "name": "Power meter - power factor - l2", "state_topic": "power-meter/power-factor/l2" }, "address": 56 },
-    { "sensor": { "unique_id": "power-meter_power-factor_l3", "name": "Power meter - power factor - l3", "state_topic": "power-meter/power-factor/l3" }, "address": 58 },
-    { "sensor": { "unique_id": "power-meter_consumption", "name": "Power meter - consumption", "state_topic": "power-meter/consumption", "unit_of_measurement": "kWh" }, "address": 256 }
-]
-
-topic_address_map = json.loads(hass_options["alternative_topics"]) if "alternative_topics" in hass_options else topic_address_map
-
-for el in topic_address_map:
-    publish(client, "homeassistant/sensor", json.dumps(el["sensor"]))
-    publish(client, f'homeassistant/sensor/{el["sensor"]["unique_id"]}/config', json.dumps(el["sensor"]))
-
-while True:
-    for el in topic_address_map:
+class ModbusRunner:
+    def __init__(self):
+        self._running = True
+    def terminate(self):
+        self._running = False
+    def run(self, mqtt_client, device_info, registered_device):
         try:
-            publish(client, el["sensor"]["state_topic"], read_address(el["address"], el["scale"] if "scale" in el else 1))
-        except:
-            log("Seems like there went something wrong while reading from the serial adapter or publishing the data.")
-    time.sleep(hass_options["publish_rate"])
+            modbus = minimalmodbus.Instrument(registered_device["serial_port"], registered_device["slave_address"])
+        except Exception as e:
+            subprocess.run(f'echo "ModbusRunner    [{datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] ERROR | Trying to setup {registered_device["device_id"]} on {registered_device["serial_port"]}. | {str(e)}"', shell=True)
+            sys.exit()
+        modbus.serial.baudrate = device_info["serial"]["baudrate"]
+        modbus.serial.bytesize = device_info["serial"]["bytesize"]
+        modbus.serial.parity = device_info["serial"]["parity"]
+        modbus.serial.stopbits = device_info["serial"]["stopbits"]
+        modbus.serial.timeout = device_info["serial"]["timeout"]
+        modbus.mode = device_info["serial"]["mode"]
+        modbus.clear_buffers_before_each_transaction = device_info["serial"]["clear_buffers_before_each_transaction"]
+        modbus.debug = device_info["serial"]["debug"]
+        read_address = lambda address,scale=1:round(modbus.read_float(address, functioncode=device_info["serial"]["functioncode"], number_of_registers=2) * scale, int(sensor["decimal_places"]) if "decimal_places" in sensor.keys() else 2)
+        while self._running:
+            for sensor in device_info["sensors"]:
+                payload = read_address(sensor["address"], sensor["scale"] if "scale" in sensor.keys() else 1)
+                mqtt_client.publish(registered_device["unique_id"]+"/"+sensor["name"].replace(" ", "_"), payload)
+            time.sleep(registered_device["poll_rate"])
+
+thread_reg = []
+def stop_thread_by_unique_id(unique_id):
+    item = [x for x in thread_reg if x["unique_id"] == unique_id][0]
+    item["terminate"]()
+    # thread_reg = [x for x in thread_reg if x["unique_id"] != unique_id] # temporary deactivated. shouldn't be a problem.
+
+# Start threads of already registered devices
+if os.path.exists("/data/devices.yaml"):
+    with open("/data/devices.yaml", 'r') as f:
+        config = yaml.safe_load(f)
+    for device in config['devices']:
+        task = ModbusRunner()
+        t1 = threading.Thread(target=task.run, args=(client, get_device_by_device_id(device["device_id"]), device))
+        t1.start()
+        thread_reg.append({"unique_id": device["unique_id"], "terminate": task.terminate})
+
+
+# API Setup
+app = Flask(__name__)
+
+# UI Endpoints
+@app.route('/')
+def index():
+    return send_from_directory('ui/src', 'index.html')
+@app.route('/<path:path>')
+def ui(path):
+    return send_from_directory('ui/src', path)
+
+# API Endpoints
+@app.route('/api/devices')
+def api_devices():
+    return json.dumps(devices_from_folder)
+
+@app.route('/api/serial')
+def api_get_serial_ports():
+    return json.dumps(glob.glob('/dev/tty[A-Za-z]*') + glob.glob('/dev/serial/by-id/*'))
+
+@app.route('/api/monitor/devices', methods = ['GET'])
+def api_monitored_devices_get():
+    if os.path.exists("/data/devices.yaml"):
+        with open("/data/devices.yaml", 'r') as f:
+            yaml_obj = yaml.safe_load(f)
+        return json.dumps(yaml_obj["devices"])
+    else:
+        return json.dumps([])
+
+@app.route('/api/monitor/devices', methods = ['POST'])
+def api_monitored_devices_post():
+    data = request.get_json()
+    data["unique_id"] = str(uuid.uuid4())
+    device_info = get_device_by_device_id(data["device_id"])
+    device_data = {
+        "identifiers": [data["unique_id"]],
+        "name": device_info["name"],
+        "model": device_info["product_name"],
+        "manufacturer": device_info["company_name"]
+    }
+    for sensor in device_info["sensors"]:
+        message = {
+            "name": sensor["name"],
+            "object_id": data["unique_id"] + "_" + sensor["name"].replace(" ", "_"),
+            "unique_id": data["unique_id"] + "_" + sensor["name"].replace(" ", "_"),
+            "state_topic": data["unique_id"] + "/" + sensor["name"].replace(" ", "_"),
+            "device": device_data,
+        }
+        if 'icon' in sensor.keys():
+            message['icon'] = sensor['icon']
+        if 'unit' in sensor.keys():
+            message['unit_of_measurement'] = sensor['unit']
+        client.publish(f'homeassistant/sensor/{data["unique_id"] + "_" + sensor["name"].replace(" ", "_")}/config', json.dumps(message))
+
+
+    task = ModbusRunner()
+    t1 = threading.Thread(target=task.run, args=(client, device_info, data))
+    t1.start()
+    thread_reg.append({"unique_id": data["unique_id"], "terminate": task.terminate})
+
+    if not os.path.exists("/data/devices.yaml"):
+        config = {'devices': [data]}
+        with open("/data/devices.yaml", 'w') as f:
+            yaml.dump(config, f)
+    else:
+        with open("/data/devices.yaml", 'r') as f:
+            config = yaml.safe_load(f)
+        config['devices'].append(data)
+        with open("/data/devices.yaml", 'w') as f:
+            yaml.dump(config, f)
+    return json.dumps(data)
+
+@app.route('/api/monitor/devices/<unique_id>', methods = ['DELETE'])
+def api_monitored_devices_delete(unique_id):
+    stop_thread_by_unique_id(unique_id)
+    # Delete from devices.yaml
+    devices_file = '/data/devices.yaml'
+    with open(devices_file, 'r') as f:
+        devices = yaml.load(f, Loader=yaml.FullLoader)
+    new_devices = []
+    for device in devices['devices']:
+        if device['unique_id'] != unique_id:
+            new_devices.append(device)
+        else:
+            device_to_delete = device
+    with open(devices_file, 'w') as f:
+        yaml.dump({'devices': new_devices}, f)
+
+    # Delete the device and sensor entities
+    device_info = get_device_by_device_id(device_to_delete['device_id'])
+    for sensor in device_info['sensors']:
+        topic = "homeassistant/sensor/{}/config".format(device_to_delete["unique_id"] + "_" + sensor["name"].replace(" ", "_"))
+        client.publish(topic, payload=None, retain=True)
+    return "ok"
+
+
+app.run(host='0.0.0.0', port=8099)

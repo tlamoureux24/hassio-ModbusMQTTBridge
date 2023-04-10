@@ -1,1 +1,3 @@
-/modbus_mqtt_bridge_new/ui/node_modules
+/modbus_mqtt_bridge/ui/node_modules
+.vscode
+.devcontainer

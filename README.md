@@ -1,188 +1,83 @@
 ## Home Assistant Addon: Modbus MQTT Bridge
 
-This Home Assistant addon creates a bridge between a Modbus device and an MQTT broker. It reads data from a Modbus device and publishes it to MQTT topics at a defined interval. Entities will get automatically created. It should be able to interface with modbus devices using a cheap 2$ usb-rs485 adapter.
+'Modbus MQTT Bridge' is a Home Assistant add-on that allows users to easily add Modbus devices to their Home Assistant instance using a simple user interface. This add-on provides a way to connect USB Modbus devices to Home Assistant via MQTT, which can be easily integrated with other devices and sensors.
+
+![main_page](https://raw.githubusercontent.com/MerzSebastian/hassio-ModbusMQTTBridge/main/modbus_mqtt_bridge/documentation/main_page.png)
 
 # Installation
 
 To install this add-on, follow these steps:
 
 1. Open the Home Assistant web interface
-2. Click on the Supervisor tab
-3. Click on Add-on Store
-4. Add the following URL to the "Repositories" field: https://github.com/MerzSebastian/hassio-ModbusMQTTBridge
-5. Click on the "Add" button
-6. Find the add-on you want to install and click on it
-7. Click on the "Install" button
 
-# Configuration
+2. Click on the Settings tab
 
-The add-on can be configured using the config tab. The addon is pre-configured to work with a product called "ORNO OR-WE-517". This can be overwritten by filling the "alternative_topics" option.
-Here's an overview of the available options:
+3. Click on Add-ons
 
-- `publish_rate`: The interval (in seconds) at which the add-on publishes data to MQTT
-- `serial_port`: The path to the USB port where the Modbus device is connected
-- `serial_baudrate`: The baud rate to use for serial communication with the Modbus device
-- `serial_bytesize`: The number of data bits to use for serial communication with the Modbus device
-- `serial_parity`: The parity scheme to use for serial communication with the Modbus device
-- `serial_stopbits`: The number of stop bits to use for serial communication with the Modbus device
-- `serial_timeout`: The timeout (in seconds) for serial communication with the Modbus device
-- `serial_mode`: The mode (`rtu` for RTU mode, `ascii` for ASCII mode) to use for serial communication with the Modbus device
-- `serial_clear_buffers_before_each_transaction`: Whether to clear the serial buffers before each Modbus transaction
-- `serial_debug`: Whether to enable debug logging for serial communication
-- `alternative_topics`: (optional) A JSON-formatted string specifying alternative MQTT topics and Modbus addresses to use ([example](https://github.com/MerzSebastian/hassio-ModbusMQTTBridge#default-topics-value))
+4. Click on Add-on Store
+
+5. Open the menu on the top right and click on Repositories
+
+6. Add the following URL to the input field: https://github.com/MerzSebastian/hassio-ModbusMQTTBridge
+
+7. Click on the "Add" button
+
+8. Find the Modbus MQTT Bridge Addon and click on it
+
+9. Click on the "Install" button
 
 # Usage
 
-Once the add-on is installed and configured, it will automatically create MQTT sensors based on the config data you provided.
+Once the add-on is installed and configured, open up the provided ui and add your devices.
 
-# Default topics value
+1. Select a device from the devices list
+   ![device_not_selected](https://raw.githubusercontent.com/MerzSebastian/hassio-ModbusMQTTBridge/main/modbus_mqtt_bridge/documentation/device_not_selected.png)
 
-```json
-[
-  {
-    "sensor": {
-      "unique_id": "power-meter_voltage_l1",
-      "name": "Power meter - voltage - l1",
-      "state_topic": "power-meter/voltage/l1",
-      "unit_of_measurement": "V"
-    },
-    "address": 14
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_voltage_l2",
-      "name": "Power meter - voltage - l2",
-      "state_topic": "power-meter/voltage/l2",
-      "unit_of_measurement": "V"
-    },
-    "address": 16
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_voltage_l3",
-      "name": "Power meter - voltage - l3",
-      "state_topic": "power-meter/voltage/l3",
-      "unit_of_measurement": "V"
-    },
-    "address": 18
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_frequency",
-      "name": "Power meter - frequency",
-      "state_topic": "power-meter/frequency",
-      "unit_of_measurement": "Hz"
-    },
-    "address": 20
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_current_l1",
-      "name": "Power meter - current - l1",
-      "state_topic": "power-meter/current/l1",
-      "unit_of_measurement": "A"
-    },
-    "address": 22
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_current_l2",
-      "name": "Power meter - current - l2",
-      "state_topic": "power-meter/current/l2",
-      "unit_of_measurement": "A"
-    },
-    "address": 24
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_current_l3",
-      "name": "Power meter - current - l3",
-      "state_topic": "power-meter/current/l3",
-      "unit_of_measurement": "A"
-    },
-    "address": 26
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_wattage",
-      "name": "Power meter - wattage",
-      "state_topic": "power-meter/wattage",
-      "unit_of_measurement": "W"
-    },
-    "address": 28,
-    "scale": 1000
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_wattage_l1",
-      "name": "Power meter - wattage - l1",
-      "state_topic": "power-meter/wattage/l1",
-      "unit_of_measurement": "W"
-    },
-    "address": 30,
-    "scale": 1000
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_wattage_l2",
-      "name": "Power meter - wattage - l2",
-      "state_topic": "power-meter/wattage/l2",
-      "unit_of_measurement": "W"
-    },
-    "address": 32,
-    "scale": 1000
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_wattage_l3",
-      "name": "Power meter - wattage - l3",
-      "state_topic": "power-meter/wattage/l3",
-      "unit_of_measurement": "W"
-    },
-    "address": 34,
-    "scale": 1000
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_power-factor_l1",
-      "name": "Power meter - power factor - l1",
-      "state_topic": "power-meter/power-factor/l1"
-    },
-    "address": 54
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_power-factor_l2",
-      "name": "Power meter - power factor - l2",
-      "state_topic": "power-meter/power-factor/l2"
-    },
-    "address": 56
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_power-factor_l3",
-      "name": "Power meter - power factor - l3",
-      "state_topic": "power-meter/power-factor/l3"
-    },
-    "address": 58
-  },
-  {
-    "sensor": {
-      "unique_id": "power-meter_consumption",
-      "name": "Power meter - consumption",
-      "state_topic": "power-meter/consumption",
-      "unit_of_measurement": "kWh"
-    },
-    "address": 256
-  }
-]
+2. Fill out the additional inputs and press on Add
+   ![device_selected](https://raw.githubusercontent.com/MerzSebastian/hassio-ModbusMQTTBridge/main/modbus_mqtt_bridge/documentation/device_selected.png)
+
+Info: Using multiple slaves on the same usb device is curretly untested because I only have a single modbus device on hand.
+
+# Supported Devices
+
+ORNO
+
+- OR-WE-517 (tested)
+
+Eastron
+
+- sdm230 (untested)
+
+- sdm630 V2 (untested)
+
+# Adding Custom Devices
+
+If a device is not yet supported by Modbus MQTT Bridge, you can create a custom device by adding a folder named "custom-modbus-devices" and adding a custom YAML configuration for your device. The folder should be added to the /config directory in your Home Assistant installation.
+
+The structure of the YAML configuration file can be seen here:
+
+```yaml
+name: Orno Energy Meter
+unique_id: orno_or-we-517
+company_name: ORNO
+product_name: OR-WE-517
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: E
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+  functioncode: 3
+sensors:
+  - name: voltage l1
+    icon: mdi:lightning-bolt # optional
+    decimal_places: 2 # optional (default: 2)
+    address: 14
+    unit: V
 ```
-
-# Credits
-
-This add-on was created by Sebastian Merz. It uses the following libraries:
-minimalmodbus
-paho-mqtt
 
 # Support
 

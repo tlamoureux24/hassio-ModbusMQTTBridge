@@ -1,5 +1,0 @@
-requests
-Flask
-pyyaml
-paho-mqtt
-minimalmodbus

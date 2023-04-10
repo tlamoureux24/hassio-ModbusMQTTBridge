@@ -1,3 +1,5 @@
-minimalmodbus
-paho-mqtt
 requests
+Flask
+pyyaml
+paho-mqtt
+minimalmodbus
