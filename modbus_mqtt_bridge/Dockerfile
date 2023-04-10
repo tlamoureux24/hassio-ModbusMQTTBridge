@@ -16,7 +16,7 @@ RUN chmod a+x /requirements.txt
 RUN pip3 install -r requirements.txt
 
 # Copy ui folder
-COPY ui /ui
+COPY ui/src /ui/src
 COPY devices /devices
 
 CMD ["/usr/bin/with-contenv", "exec", "python3", "adapter.py"]
