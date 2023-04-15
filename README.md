@@ -46,6 +46,8 @@ ORNO
 
 Eastron
 
+- sdm120 (untested)
+
 - sdm230 (untested)
 
 - sdm630 V2 (untested)
