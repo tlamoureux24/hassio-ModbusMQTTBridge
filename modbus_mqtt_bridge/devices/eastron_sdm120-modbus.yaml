@@ -1,0 +1,78 @@
+name: Eastron Energy Meter
+unique_id: eastron_sdm120-modbus
+company_name: Eastron
+product_name: SDM120-Modbus
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: 'N'
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+  functioncode: 4
+sensors:
+- address: 0
+  name: Voltage
+  unit: Float
+- address: 6
+  name: Current
+  unit: Float
+- address: 12
+  name: Active power
+  unit: Float
+- address: 18
+  name: Apparent power
+  unit: Float
+- address: 24
+  name: Reactive power
+  unit: Float
+- address: 30
+  name: Power
+  unit: Float
+- address: 70
+  name: Frequency
+  unit: Float
+- address: 72
+  name: Import active energy
+  unit: Float
+- address: 74
+  name: Export active energy
+  unit: Float
+- address: 76
+  name: Import reactive energy
+  unit: Float
+- address: 78
+  name: Export reactive energy
+  unit: Float
+- address: 84
+  name: Total system power demand
+  unit: Float
+- address: 86
+  name: Maximum total system power demand
+  unit: Float
+- address: 88
+  name: Import system power demand
+  unit: Float
+- address: 90
+  name: Maximum Import system power demand
+  unit: Float
+- address: 92
+  name: Export system power demand
+  unit: Float
+- address: 94
+  name: Maximum Export system power demand
+  unit: Float
+- address: 2
+  name: current demand
+  unit: Float
+- address: 8
+  name: Maximum current demand
+  unit: Float
+- address: 86
+  name: Total active energy
+  unit: Float
+- address: 88
+  name: Total reactive energy
+  unit: Float

@@ -1,3 +1,4 @@
 /modbus_mqtt_bridge/ui/node_modules
 .vscode
 .devcontainer
+convert.js

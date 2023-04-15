@@ -14,13 +14,13 @@ serial:
   functioncode: 4
 sensors:
   - address: 0
-    name: Line to neutral volts.
+    name: Line to neutral volts
     unit: Volts
   - address: 6
-    name: Current.
+    name: Current
     unit: Amps
   - address: 12
-    name: Active power.
+    name: Active power
     unit: Watts
   - address: 18
     name: Apparent power
@@ -31,7 +31,7 @@ sensors:
   - address: 30
     name: Power factor
   - address: 36
-    name: Phase angle.
+    name: Phase angle
     unit: Degree
   - address: 70
     name: Frequency
@@ -67,10 +67,10 @@ sensors:
     name: Maximum system reverse power demand
     unit: W
   - address: 258
-    name: Current demand.
+    name: Current demand
     unit: Amps
   - address: 264
-    name: Maximum current demand.
+    name: Maximum current demand
     unit: Amps
   - address: 342
     name: Total active energy
