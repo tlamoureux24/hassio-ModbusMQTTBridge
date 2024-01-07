@@ -1,0 +1,18 @@
+name: Chint Energy Meter
+unique_id: chint_dtsu66-modbus
+company_name: Chint
+product_name: DTSU666-Modbus
+serial:
+  baudrate: 9600
+  bytesize: 8
+  parity: 'N'
+  stopbits: 1
+  timeout: 0.6
+  mode: rtu
+  debug: False
+  clear_buffers_before_each_transaction: True
+  functioncode: 4
+sensors:
+- address: 0
+  name: Voltage
+  unit: Float

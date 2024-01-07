@@ -1,0 +1,12 @@
+devices:
+  - device_id: orno_or-we-517
+    unique_id: 123123-123123-123123-123123
+    poll_rate: 2
+    serial_port: /dev/ttyS0
+    slave_address: 1
+
+  - device_id: orno_or-we-517
+    unique_id: 123123-123123-123123-123126
+    poll_rate: 3
+    serial_port: /dev/ttyS0
+    slave_address: 2
